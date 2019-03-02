@@ -34,7 +34,7 @@
                 </ul>
             {% endif %}
                 {% if request.user.is_authenticated %}
-                  <p class="username"> {{ request.user.username }} </p>
+                <i class="fas fa-user-alt" style="color:white;padding-left:30px;font-face:"arial"; "> {{ request.user.username }} </i>
                 {% endif %}
     </div>
 </nav>

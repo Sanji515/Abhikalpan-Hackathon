@@ -17,7 +17,6 @@ natural_language_understanding = NaturalLanguageUnderstandingV1(
    url='https://gateway-fra.watsonplatform.net/natural-language-understanding/api'
 )
 
-
 def recognize(input_text):
     response = natural_language_understanding.analyze(
        text=input_text,
@@ -25,13 +24,13 @@ def recognize(input_text):
            entities=EntitiesOptions(model ='73914a25-4c07-4174-923e-74852b373117')))
     return(response.result['entities'])
 
-
 def index(request):
+	
 	if request.method == 'POST':
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
 			form.save()
-			status = 2 
+			status = 2
 			context = {
 				'status' : status,
 				'form': form
@@ -73,10 +72,13 @@ def dashboard(request):
 			'result': result,
 			'curr_complaint': curr_complaint
 		}
+
 		return HttpResponse(JsonResponse(context), content_type='application/json')
 
 	context = {
 		'complaints': complaints,
+
+        'delete': 0,
 		'all_complaints': all_complaints
 	}
 	return render(request, 'index/dashboard.html', context)
@@ -91,6 +93,14 @@ def complaintDetails(request, id):
 		'comment': comment
 	}
 	return render(request, 'index/complaintDetails.html', context)
+@login_required
+def deleteDetails(request , id ):
+     delete_complaints = Complaint.objects.filter(id=id)
+     delete_complaints.delete()
+     complaints = Complaint.objects.all()
+     context = {'complaints':complaints , 'delete':1,}
+     return render(request, 'index/dashboard.html', context)
+
 
 
 
@@ -123,6 +133,7 @@ def LogoutView(request):
 		'form':form
 	}
 	return render(request, 'index/index.html', context)
+
 
 def CommentView(request):
 	if request.method == 'POST':

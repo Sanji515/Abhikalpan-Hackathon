@@ -36,6 +36,9 @@
 	#topbar-menu-container {
 		flex-direction: column;
 	}
+	.fas fa-trash-alt {
+		size : 10px;
+	}
 
 	.navbar-brand i {
 		margin-right: .5rem;
@@ -208,7 +211,13 @@
 
     {% if request.user.is_authenticated %}
     	<div class="alert alert-info" id="snackbar">
+				{% if delete == 0 %}
 		  <strong>Hello,  {{request.user.username}}</strong>
+			   {% endif %}
+			  {% if delete == 1 %}
+		 <strong>Deleted</strong>
+		     {% endif %}
+
 		</div>
     {% endif %}
 
@@ -253,26 +262,32 @@
 
 					    </div>
 						<br>
-								<!-- <div class="col-7"> -->
-								{% if complaints.count == 0 %}
-									<center><h3>You haven't filed a complaint yet!</h3></center>
-									<br>
-								{% else %}
-									<div style="margin-right: 5%; margin-left: 5%;">
-							      	{% for complaint in complaints %}
-							      	
-								      	<div class="card">
-										  <div class="card-header">
-										    <a href="{% url 'index:details' complaint.id %}"><h2>{{complaint.title}}</h2></a>
-										    <h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
-										  </div>
+
+						{% if complaints.count == 0 %}
+							<center><h3>You haven't filed a complaint yet!</h3></center>
+							<br>
+						{% else %}
+					      	{% for complaint in complaints %}
+						      	<div class="card">
+								  <div class="card-header">
+										<div class="row">
+											<div class="col-10">
+											<a href="{% url 'index:details' complaint.id %}"><h2>{{complaint.title}}</h2></a>
+											<h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
+											</div>
+											<div class= "col-2">
+												<div style="float:right; position: relative;">
+											<a class="trashhref" href="{% url 'index:deleteDetails' complaint.id %}">
+												<i class="fas fa-trash-alt fa-lg" style="color:black;"></i></a>
+		
+												</div>
+											</div>
 										</div>
-										<br>
-									
-									{% endfor %}
-									</div>
-								{% endif %}
-								<!-- </div> -->
+								  </div>
+								</div>
+								<br>
+							{% endfor %}
+						{% endif %}
 			    	</div>
 
 			    	<div class="tab-pane" id="allComplaints">
@@ -286,6 +301,7 @@
 						<br>
 						{% if all_complaints.count == 0 %}
 							<center><h3>No complaints found!</h3></center>
+
 							<br>
 						{% else %}
 					      	{% for complaint in all_complaints %}
@@ -353,7 +369,7 @@ function downloadJSAtOnload() {
     					'description': $('#description').val(),
     					'csrfmiddlewaretoken': '{{csrf_token}}'
     				},
-    				
+
     				success: function(response){
     					var result = response.result;
     					curr_complaint = JSON.parse(response.curr_complaint);
@@ -393,7 +409,7 @@ function downloadJSAtOnload() {
 		    						}
 		    						console.log(description);
     							}
-    						}	
+    						}
     					}
     					$('#complaint-form').css({'display': 'none'});
     					$('#result-tab').css({'display': 'block'});
