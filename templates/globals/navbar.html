@@ -18,11 +18,15 @@
                     <a class="nav-link" href="#">Profile</a>
                 </li>
             </ul>
-
-            <ul class="navbar-nav ml-auto">
-              <a onclick="toggleLogin()" class="btn btn-white btn-rounded blue-text font-weight-bold ml-lg-0 wow fadeInLeft" data-wow-delay="0.3s">Login</a>
-              <a onclick="toggleSignup()" class="btn btn-outline-white btn-rounded font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">Sign Up</a>
-            </ul>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'index:dashboard'%}" class="btn btn-outline-white btn-rounded font-weight-bold wow fadeInLeft">Dashboard</a>
+                <a href="{% url 'index:logout'%}" class="btn btn-outline-white btn-rounded font-weight-bold wow fadeInLeft">Log Out</a>
+            {% else %}
+                <ul class="navbar-nav ml-auto">
+                  <a onclick="toggleLogin()" class="btn btn-white btn-rounded blue-text font-weight-bold ml-lg-0 wow fadeInLeft" data-wow-delay="0.3s">Login</a>
+                  <a onclick="toggleSignup()" class="btn btn-outline-white btn-rounded font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">Sign Up</a>
+                </ul>
+            {% endif %}
         </div>
     </div>
 </nav>

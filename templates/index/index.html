@@ -218,6 +218,25 @@
       </div>
     </div>
 
+    <div id="errorModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">error</h2>
+          </div>
+          <div class="modal-body">
+            <h4>Login creadentials are incorrect. Please try again</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     {% block javascript %}
 
         {% if status == 3 %}
@@ -229,6 +248,12 @@
         {% if status == 2 %}
             <script type="text/javascript">
                 $("#successModal").modal() ;
+            </script>
+        {% endif %}
+
+        {% if status == 4 %}
+            <script type="text/javascript">
+                $("#errorModal").modal() ;
             </script>
         {% endif %}
 
