@@ -55,7 +55,7 @@ def LoginView(request):
 		if user is not None:
 			if user.is_active:
 				login(request, user)
-				return render(request, 'index/dashboard.html', {})
+				return redirect('index:dashboard')
 	form = RegistrationForm()
 	status = 4
 	context = {
