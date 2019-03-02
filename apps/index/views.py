@@ -66,11 +66,19 @@ def dashboard(request):
 			'curr_complaint': curr_complaint
 		}
 		return render(request, 'index/dashboard.html', context)
-		
+
 	context = {
 		'complaints': complaints
 	}
 	return render(request, 'index/dashboard.html', context)
+
+@login_required
+def complaintDetails(request, id):
+	complaints = Complaint.objects.filter(id=id)
+	context = {
+		'complaints':complaints
+	}
+	return render(request, 'index/complaintDetails.html', context)
 
 
 

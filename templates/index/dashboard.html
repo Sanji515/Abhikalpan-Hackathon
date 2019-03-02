@@ -266,13 +266,8 @@
 				      	{% for complaint in complaints %}
 					      	<div class="card">
 							  <div class="card-header">
-							    <h2>{{complaint.title}}</h2>
-							  </div>
-							  <div class="card-body">
-							    <h6 class="card-title">{{complaint.meta_description}}</h6>
-							    <br>
-							    <h5>Description:</h5>
-							    <p class="card-text">{{complaint.description}}</p>
+							    <a href="{% url 'index:details' complaint.id %}"><h2>{{complaint.title}}</h2></a>
+							    <h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
 							  </div>
 							</div>
 							<br>
