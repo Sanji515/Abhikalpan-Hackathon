@@ -1,0 +1,284 @@
+{% extends 'globals/base.html' %}
+{% load static %}
+
+{% block css %}
+	<style type="text/css">
+	#navbar {
+		background: -webkit-linear-gradient(45deg,#68d0ff,#453cf5 100%);
+    	background: 0 0,0 0,0 0,to(#453cf5);
+	}
+
+	body {
+		padding-top: 50px;
+	}
+
+
+	main {
+
+		margin-left: 225px;
+		/* Should match width of #nav-sidebar. */
+		padding: 1rem 15px;
+		width: 100%
+	}
+
+	#nav-topbar {
+		padding-left: 0;
+		border-radius: 0;
+		flex-direction: row;
+	}
+
+	#nav-topbar .brand-container {
+		width: 225px;
+		/* Should match width of #nav-sidebar */
+		padding-left: 1rem;
+	}
+
+	#topbar-menu-container {
+		flex-direction: column;
+	}
+
+	.navbar-brand i {
+		margin-right: .5rem;
+	}
+
+	.navbar-toggler {
+		font-size: 1.5rem;
+		margin-top: .25rem;
+	}
+
+	.navbar-toggleable-sm .navbar-collapse,
+	.navbar-toggleable-md .navbar-collapse {
+		width: auto;
+		padding-left: 10px;
+	}
+
+
+	#nav-sidebar {
+		position: fixed;
+		width: 225px;
+		/* Should match width of main margin-left*/
+		top: 51px;
+		bottom: 0;
+		left: 0;
+		z-index: 1000;
+		padding: 1rem 0;
+		overflow-x: hidden;
+		overflow-y: auto;
+		/* Scrollable contents if viewport is shorter than content. */
+		border-right: 1px solid #eee;
+		box-shadow: 2px 0 5px 0 rgba(0, 0, 0, .16), 2px 0 10px 0 rgba(0, 0, 0, .12);
+		white-space: nowrap;
+		transition: all 0.5s ease;
+		-webkit-transition: all 0.5s ease;
+		-moz-transition: all 0.5s ease;
+		-o-transition: all 0.5s ease;
+	}
+
+	.sidebar-expand {
+		display: inline-flex;
+		margin: 0 0 1.5rem 1rem;
+	}
+
+	.sidebar-expand button {
+		font-size: 2.5rem;
+		line-height: 1.1;
+		color: #000;
+		background: 0 0;
+		border-width: 0;
+		border-color: rgba(255, 255, 255, .1);
+		cursor: pointer;
+		transition: all 0.5s ease;
+		-webkit-transition: all 0.5s ease;
+		-moz-transition: all 0.5s ease;
+		-o-transition: all 0.5s ease;
+	}
+
+	.sidebar-header {
+		padding: 0 1rem;
+	}
+
+	@media (max-width:767px) {
+		#nav-topbar .brand-container,
+		#nav-sidebar {
+			width: 50px;
+		}
+		#nav-topbar .brand-container.active,
+		#nav-sidebar.active {
+			width: 225px;
+			min-width: 50px;
+			max-width: 225px;
+		}
+		#nav-sidebar.active .sidebar-content {
+			display: block !important;
+		}
+		main {
+			margin-left: 50px;
+		}
+	}
+
+
+	.rotate-90cw {
+		transform: rotate(90deg);
+		-webkit-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+		-ms-transform: rotate(90deg);
+	}
+
+	.rotate-180cw {
+		transform: rotate(180deg);
+		-webkit-transform: rotate(180deg);
+		-moz-transform: rotate(180deg);
+		-ms-transform: rotate(180deg);
+	}
+
+	.rotate-90ccw {
+		transform: rotate(-90deg);
+		-webkit-transform: rotate(-90deg);
+		-moz-transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg);
+	}
+
+	.rotate-180ccw {
+		transform: rotate(-180deg);
+		-webkit-transform: rotate(-180deg);
+		-moz-transform: rotate(-180deg);
+		-ms-transform: rotate(-180deg);
+	}
+
+	.flip-y {
+		transform: perspective(100px) rotateY(180deg);
+		-webkit-transform: perspective(100px) rotateY(180deg);
+		-moz-transform: perspective(100px) rotateY(180deg);
+		-ms-transform: perspective(100px) rotateY(180deg);
+	}
+
+	.flip-x {
+		transform: perspective(100px) rotateX(180deg);
+		-webkit-transform: perspective(100px) rotateX(180deg);
+		-moz-transform: perspective(100px) rotateX(180deg);
+		-ms-transform: perspective(100px) rotateX(180deg);
+	}
+	</style>
+
+{% endblock %}
+
+{% block body %}
+
+    <!--Main Navigation-->
+    <header>
+      {% include 'globals/navbar.html' %}
+    </header>
+    <!--Main Navigation-->
+   <div class="container-fluid">
+		<div class="row">
+			<div class = "col-6">
+			<nav id="nav-sidebar" class="bg-faded">
+
+				<div class="sidebar-expand hidden-md-up">
+					<button type="button">
+	              	<i class="fa fa-angle-right"></i>
+	            	</button>
+				</div>
+				<div class="sidebar-header hidden-sm-down">
+					<h1>Sidebar</h1>
+					<hr/>
+				</div>
+				<div class="sidebar-content hidden-sm-down">
+					<ul class="nav nav-pills flex-column">
+						<li class="nav-item">
+							<a class="nav-link active" href="#">Overview <span class="sr-only">(current)</span></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Reports</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Analytics</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Export</a>
+						</li>
+					</ul>
+
+				</div>
+
+			</nav>
+			</div>
+
+				<main>
+				<!--Footer-->
+			    <footer class="page-footer text-center text-md-left blue-grey lighten-5 pt-0">
+			        <div style="background-color: #5991fb;">
+			            <div class="container">
+			                <!--Grid row-->
+			                <div class="row py-4 d-flex align-items-center">
+
+			                </div>
+			                <!--Grid row-->
+			            </div>
+			        </div>
+
+			        <!--Footer Links-->
+			        <div class="container mt-5 mb-4 text-center text-md-left">
+			            <div class="row mt-3">
+
+			                <!--First column-->
+			                <div class="col-md-3 col-lg-4 col-xl-3 mb-4 dark-grey-text">
+			                    <h6 class="text-uppercase font-weight-bold"><strong>Company name</strong></h6>
+			                    <hr class="blue mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+			                    <p>Lorem ipsum dolor sit amet, consectetur
+			                        adipisicing elit.</p>
+			                </div>
+			                <!--/.First column-->
+
+			                <!--Second column-->
+			                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 dark-grey-text">
+			                    <h6 class="text-uppercase font-weight-bold"><strong>Products</strong></h6>
+			                    <hr class="blue mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+			                    <p><a href="#!" class="dark-grey-text">Some Name</a></p>
+			                    <p><a href="#!" class="dark-grey-text">Some Name</a></p>
+			                    <p><a href="#!" class="dark-grey-text">Some Name</a></p>
+			                    <p><a href="#!" class="dark-grey-text">Some Name</a></p>
+			                </div>
+			                <!--/.Second column-->
+
+			                <!--Third column-->
+			                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4 dark-grey-text">
+			                    <h6 class="text-uppercase font-weight-bold"><strong>Useful links</strong></h6>
+			                    <hr class="blue mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+			                    <p><a href="#!" class="dark-grey-text">Your Account</a></p>
+			                    <p><a href="#!" class="dark-grey-text">Become an Affiliate</a></p>
+			                    <p><a href="#!" class="dark-grey-text">Shipping Rates</a></p>
+			                    <p><a href="#!" class="dark-grey-text">Help</a></p>
+			                </div>
+			                <!--/.Third column-->
+
+			                <!--Fourth column-->
+			                <div class="col-md-4 col-lg-3 col-xl-3 dark-grey-text">
+			                    <h6 class="text-uppercase font-weight-bold"><strong>Contact</strong></h6>
+			                    <hr class="blue mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+			                    <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+			                    <p><i class="fas fa-envelope mr-3"></i> info@example.com</p>
+			                    <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+			                    <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+			                </div>
+			                <!--/.Fourth column-->
+
+			            </div>
+			        </div>
+			        <!--/.Footer Links-->
+			    </footer>
+			    <!--/.Footer-->
+			</main>
+		</div>
+	</div>
+
+    {% block javascript %}
+    	<script type="text/javascript">
+    		$('.sidebar-expand button').click(function() {
+				$(this).toggleClass("flip-y");
+			  $('#nav-sidebar').toggleClass( "active" );
+			});
+    	</script>
+    {% endblock %}
+
+{% endblock %}
