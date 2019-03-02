@@ -34,21 +34,7 @@ def index(request):
 @login_required
 def dashboard(request):
 	complaints = Complaint.objects.all()
-
-	if request.method == 'POST':
-		Complaint.objects.create(
-			user=request.user,
-			title=request.POST['title'],
-			meta_description=request.POST['meta_description'],
-			description=request.POST['description'])
-
-		result = detect_sensitive_text(request.POST['description'])
-
-		context = {
-			'result': result
-		}
-		return render(request, 'index/dashboard.html', context)
-
+	print('asdsa',complaints)
 	context = {
 		'complaints': complaints
 	}
@@ -57,6 +43,8 @@ def dashboard(request):
 
 
 def LoginView(request):
+	if request.user.is_authenticated:
+		return render(request, 'index/dashboard.html', {})
 	logout(request)
 	username = password = ''
 	if request.POST:
