@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # Django Apps
     'index',
     'account',
+    'complaint',
 ]
 
 MIDDLEWARE = [

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from account.forms import RegistrationForm
+from .models import Complaint
 # Create your views here.
 
 def index(request):
@@ -19,5 +20,11 @@ def index(request):
 
 
 def dashboard(request):
+	complaints = Complaint.objects.all()
+	print('asdsa',complaints)
 
-	return render(request, 'index/dashboard.html', {})
+	context = {
+		'complaints': complaints
+	}
+
+	return render(request, 'index/dashboard.html', context)
