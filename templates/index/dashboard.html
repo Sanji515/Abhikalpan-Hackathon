@@ -158,11 +158,59 @@
 		-moz-transform: perspective(100px) rotateX(180deg);
 		-ms-transform: perspective(100px) rotateX(180deg);
 	}
+
+	#snackbar {
+	  visibility: hidden;
+	  min-width: 250px;
+	  margin-left: -125px;
+	  background-color: #333;
+	  color: #fff;
+	  text-align: center;
+	  border-radius: 2px;
+	  padding: 16px;
+	  position: fixed;
+	  z-index: 1;
+	  left: 50%;
+	  bottom: 30px;
+	  font-size: 17px;
+	}
+
+	#snackbar.show {
+	  visibility: visible;
+	  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	}
+
+	@-webkit-keyframes fadein {
+	  from {bottom: 0; opacity: 0;} 
+	  to {bottom: 30px; opacity: 1;}
+	}
+
+	@keyframes fadein {
+	  from {bottom: 0; opacity: 0;}
+	  to {bottom: 30px; opacity: 1;}
+	}
+
+	@-webkit-keyframes fadeout {
+	  from {bottom: 30px; opacity: 1;} 
+	  to {bottom: 0; opacity: 0;}
+	}
+
+	@keyframes fadeout {
+	  from {bottom: 30px; opacity: 1;}
+	  to {bottom: 0; opacity: 0;}
+	}
 	</style>
 
 {% endblock %}
 
 {% block body %}
+
+    {% if request.user.is_authenticated %}
+    	<div class="alert alert-info" id="snackbar">
+		  <strong>Hii!! {{request.user.username}}</strong>
+		</div>
+    {% endif %}
 
     <!--Main Navigation-->
       {% include 'globals/navbar.html' %}
@@ -210,7 +258,6 @@
 			    		<br>
 						<div id="navbar" class="header">
 					      <div class="row d-flex justify-content-center">
-					      	<h2>Hii {{request.user.username}}</h2>
 					        <h3 class="white-text mb-0 py-5 font-weight-bold">Your Complaints</h3>
 					      </div>
 
@@ -313,6 +360,20 @@
 	</div>
 
     {% block javascript %}
+    	{% if request.user.is_authenticated %}
+    	<script type="text/javascript">
+    		$(document).ready({
+    			alert("Hi") ;
+    			snackbarFunction() ;
+    		});
+
+    		function snackbarFunction(){
+    			var x = document.getElementById("snackbar");
+			    x.className = "show";
+			    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    		}
+    	</script>
+    	{% endif %}
     	<script type="text/javascript">
     		$('.sidebar-expand button').click(function() {
 				$(this).toggleClass("flip-y");
