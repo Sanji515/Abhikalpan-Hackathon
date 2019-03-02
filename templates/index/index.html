@@ -18,15 +18,13 @@
                         <div class="row flex-center pt-5 mt-3">
                             <div class="col-md-12 col-lg-6 text-center text-md-left margins">
                                 <div class="white-text">
-                                    <h1 class="h1-responsive font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">We'll make you anonymous </h1>
+                                    <h1 class="h1-responsive font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">Anonymous Complaint Forum</h1>
                                     <hr class="hr-light wow fadeInLeft" data-wow-delay="0.3s">
-                                    <h6 class="wow fadeInLeft" data-wow-delay="0.3s">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem repellendus quasi fuga nesciunt
-                                        dolorum nulla magnam veniam sapiente, fugiat! Commodi sequi non animi ea dolor molestiae
-                                        iste.
+                                    <h6 class="wow fadeInLeft" data-wow-delay="0.3s">Report your problems with full authenticity and leave security concerns on us. Our <b>IBM NLU</b> powered platform detects sensitive information and redacts the posted complain for you. Get rid of manually redacting the whole document 
                                     </h6>
                                     <br>
-                                    <a class="btn btn-white btn-rounded blue-text font-weight-bold ml-lg-0 wow fadeInLeft" data-wow-delay="0.3s">Download</a>
-                                    <a class="btn btn-outline-white btn-rounded font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">Learn more</a>
+                                    <a class="btn btn-white btn-rounded blue-text font-weight-bold ml-lg-0 wow fadeInLeft" data-wow-delay="0.3s">About Us</a>
+                                    <a href="https://www.ibm.com/watson/services/natural-language-understanding/" class="btn btn-outline-white btn-rounded font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">Learn about IBM NLU</a>
                                 </div>
                             </div>
 
@@ -135,68 +133,7 @@
         <!--Main Navigation-->
 
         <!--Footer-->
-        <footer class="page-footer text-center text-md-left blue-grey lighten-5 pt-0">
-
-            <div style="background-color: #5991fb;">
-                <div class="container">
-                    <!--Grid row-->
-                    <div class="row py-4 d-flex align-items-center">
-
-                    </div>
-                    <!--Grid row-->
-                </div>
-            </div>
-
-            <!--Footer Links-->
-            <div class="container mt-5 mb-4 text-center text-md-left">
-                <div class="row mt-3">
-
-                    <!--First column-->
-                    <div class="col-md-3 col-lg-4 col-xl-3 mb-4 dark-grey-text">
-                        <h6 class="text-uppercase font-weight-bold"><strong>Company name</strong></h6>
-                        <hr class="blue mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                        <p>Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit.</p>
-                    </div>
-                    <!--/.First column-->
-
-                    <!--Second column-->
-                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4 dark-grey-text">
-                        <h6 class="text-uppercase font-weight-bold"><strong>Products</strong></h6>
-                        <hr class="blue mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                        <p><a href="#!" class="dark-grey-text">Some Name</a></p>
-                        <p><a href="#!" class="dark-grey-text">Some Name</a></p>
-                        <p><a href="#!" class="dark-grey-text">Some Name</a></p>
-                        <p><a href="#!" class="dark-grey-text">Some Name</a></p>
-                    </div>
-                    <!--/.Second column-->
-
-                    <!--Third column-->
-                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4 dark-grey-text">
-                        <h6 class="text-uppercase font-weight-bold"><strong>Useful links</strong></h6>
-                        <hr class="blue mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                        <p><a href="#!" class="dark-grey-text">Your Account</a></p>
-                        <p><a href="#!" class="dark-grey-text">Become an Affiliate</a></p>
-                        <p><a href="#!" class="dark-grey-text">Shipping Rates</a></p>
-                        <p><a href="#!" class="dark-grey-text">Help</a></p>
-                    </div>
-                    <!--/.Third column-->
-
-                    <!--Fourth column-->
-                    <div class="col-md-4 col-lg-3 col-xl-3 dark-grey-text">
-                        <h6 class="text-uppercase font-weight-bold"><strong>Contact</strong></h6>
-                        <hr class="blue mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                        <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
-                        <p><i class="fas fa-envelope mr-3"></i> info@example.com</p>
-                        <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
-                        <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
-                    </div>
-                    <!--/.Fourth column-->
-
-                </div>
-            </div>
-            <!--/.Footer Links-->
-        </footer>
+        {% include 'globals/footer.html'%}
         <!--/.Footer-->
 
     <div id="successModal" class="modal fade" role="dialog">
@@ -258,14 +195,16 @@
         {% endif %}
 
       <script>
-
+              $('.card-body').css({'display': 'none'});
           function toggleSignup(){
               $('#landing-image').css({'display': 'none'});
+              $('#card-body').css({'display': 'block'});
               $('#signup-form').css({'display': 'block'});
               $('#login-form').css({'display': 'none'});
           }
 
           function toggleLogin(){
+              $('.card-body').css({'display': 'block'});
               $('#landing-image').css({'display': 'none'});
               $('#signup-form').css({'display': 'none'});
               $('#login-form').css({'display': 'block'});

@@ -1,4 +1,16 @@
 <!--Navbar-->
+{% block css %}
+	<style type="text/css">
+    .username {
+
+      font-size: 1.5rem;
+  		margin-top: .25rem;
+      padding-top: 1%;
+      padding-left: 20px;
+      color : #FFFFFF;
+    }
+    </style>
+{% endblock %}
 <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
     <div class="container">
         <a class="navbar-brand" href="#"><strong>Complaint</strong></a>
@@ -9,13 +21,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'index:index'%}">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
+                    <a class="nav-link" href="{% url 'index:index'%}">Home</a>
                 </li>
             </ul>
             {% if request.user.is_authenticated %}
@@ -27,6 +33,8 @@
                   <a onclick="toggleSignup()" class="btn btn-outline-white btn-rounded font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">Sign Up</a>
                 </ul>
             {% endif %}
-        </div>
+                {% if request.user.is_authenticated %}
+                  <p class="username"> {{ request.user.username }} </p>
+                {% endif %}
     </div>
 </nav>
