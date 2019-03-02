@@ -24,6 +24,10 @@
           height: 100%;
         }
 
+        .btn-rounded {
+          border-radius: 10em;
+        }
+
         .software-lp .top-nav-collapse {
             background-color: #5991fb!important;
         }
@@ -86,16 +90,10 @@
                             <a class="nav-link" href="#">Profile</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav ml-auto nav-flex-icons">
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-light"><i class="fab fa-twitter"></i></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-light"><i class="fab fa-google-plus-g"></i></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-light"><i class="fab fa-facebook-f"></i></a>
-                        </li>
+
+                    <ul class="navbar-nav ml-auto">
+                      <a onclick="toggleLogin()" class="btn btn-white btn-rounded blue-text font-weight-bold ml-lg-0 wow fadeInLeft" data-wow-delay="0.3s">Login</a>
+                      <a onclick="toggleSignup()" class="btn btn-outline-white btn-rounded font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">Sign Up</a>
                     </ul>
                 </div>
             </div>
@@ -116,14 +114,97 @@
                                 </h6>
                                 <br>
                                 <a class="btn btn-white btn-rounded blue-text font-weight-bold ml-lg-0 wow fadeInLeft" data-wow-delay="0.3s">Download</a>
-                                <a class="btn btn-outline-white btn-rounded font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">Learn more
-                                    </a>
+                                <a class="btn btn-outline-white btn-rounded font-weight-bold wow fadeInLeft" data-wow-delay="0.3s">Learn more</a>
                             </div>
                         </div>
 
-                        <div class="col-md-12 col-lg-6  wow fadeInRight" data-wow-delay="0.3s">
+                        <div id="landing-image" class="col-md-12 col-lg-6 wow fadeInRight" data-wow-delay="0.3s">
                             <img src="https://mdbootstrap.com/img/Mockups/Transparent/Small/admin-new.png" alt="" class="img-fluid">
                         </div>
+
+                        <!--Grid column-->
+                        <div class="col-md-6 col-xl-5 mb-4">
+
+                          <!--Card-->
+                          <div class="card">
+
+                            <!--Card content-->
+                            <div class="card-body">
+
+                              <!-- Login Form -->
+                              <form style="display: none;" id="login-form" name="">
+                                <!-- Heading -->
+                                <h3 class="dark-grey-text text-center">
+                                  <strong>Login:</strong>
+                                </h3>
+                                <hr>
+
+                                <div class="md-form">
+                                  <i class="fas fa-user prefix grey-text"></i>
+                                  <input type="text" id="form3" class="form-control">
+                                  <label for="form3">Username</label>
+                                </div>
+                                <div class="md-form">
+                                  <i class="fas fa-lock prefix grey-text"></i>
+                                  <input type="password" id="form2" class="form-control">
+                                  <label for="form2">Password</label>
+                                </div>
+
+                                <div class="text-center">
+                                  <button class="btn btn-indigo">Login</button>
+                                  <hr>
+                                  <label>Start with a new account <a onclick="toggleSignup()" style="display: inline-block; color: #453cf5">Sign Up</a></label>
+                                </div>
+
+                              </form>
+                              <!-- Form -->
+
+
+                              <!-- Signup Form -->
+                              <form style="display: none;" id="signup-form" name="">
+                                <!-- Heading -->
+                                <h3 class="dark-grey-text text-center">
+                                  <strong>Signup:</strong>
+                                </h3>
+                                <hr>
+
+                                <div class="md-form">
+                                  <i class="fas fa-user prefix grey-text"></i>
+                                  <input type="text" id="form3" class="form-control">
+                                  <label for="form3">Username</label>
+                                </div>
+                                <div class="md-form">
+                                  <i class="fas fa-lock prefix grey-text"></i>
+                                  <input type="text" id="form2" class="form-control">
+                                  <label for="form2">First Name</label>
+                                </div>
+                                <div class="md-form">
+                                  <i class="fas fa-lock prefix grey-text"></i>
+                                  <input type="text" id="form2" class="form-control">
+                                  <label for="form2">Last Name</label>
+                                </div>
+                                <div class="md-form">
+                                  <i class="fas fa-lock prefix grey-text"></i>
+                                  <input type="password" id="form2" class="form-control">
+                                  <label for="form2">Password</label>
+                                </div>
+
+                                <div class="text-center">
+                                  <button class="btn btn-indigo">Login</button>
+                                  <hr>
+                                  <label>Start with a new account <a onclick="toggleLogin()" style="display: inline-block; color: #453cf5">Sign Up</a></label>
+                                </div>
+
+                              </form>
+                              <!-- Form -->
+
+                            </div>
+
+                          </div>
+                          <!--/.Card-->
+
+                        </div>
+                        <!--Grid column-->
                     </div>
                 </div>
             </div>
@@ -139,27 +220,6 @@
             <div class="container">
                 <!--Grid row-->
                 <div class="row py-4 d-flex align-items-center">
-
-                    <!--Grid column-->
-                    <div class="col-12 col-md-5 text-left mb-md-0">
-                        <h6 class="mb-0 white-text text-center text-md-left"><strong>Get connected with us on social networks!</strong></h6>
-                    </div>
-                    <!--Grid column-->
-
-                    <!--Grid column-->
-                    <div class="col-12 col-md-7 text-center text-md-right">
-                        <!--Facebook-->
-                        <a class="p-2 m-2 fa-lg fb-ic ml-0"><i class="fab fa-facebook-f white-text mr-lg-4"> </i></a>
-                        <!--Twitter-->
-                        <a class="p-2 m-2 fa-lg tw-ic"><i class="fab fa-twitter white-text mr-lg-4"> </i></a>
-                        <!--Google +-->
-                        <a class="p-2 m-2 fa-lg gplus-ic"><i class="fab fa-google-plus-g white-text mr-lg-4"> </i></a>
-                        <!--Linkedin-->
-                        <a class="p-2 m-2 fa-lg li-ic"><i class="fab fa-linkedin-in white-text mr-lg-4"> </i></a>
-                        <!--Instagram-->
-                        <a class="p-2 m-2 fa-lg ins-ic"><i class="fab fa-instagram white-text mr-lg-4"> </i></a>
-                    </div>
-                    <!--Grid column-->
 
                 </div>
                 <!--Grid row-->
@@ -242,6 +302,18 @@
         $(document).ready(function () {
             $('.mdb-select').material_select();
         });
+
+        function toggleSignup(){
+            $('#landing-image').css({'display': 'none'});
+            $('#signup-form').css({'display': 'block'});
+            $('#login-form').css({'display': 'none'});
+        }
+
+        function toggleLogin(){
+            $('#landing-image').css({'display': 'none'});
+            $('#signup-form').css({'display': 'none'});
+            $('#login-form').css({'display': 'block'});
+        }
     </script>
 
 </body>
