@@ -258,14 +258,16 @@
         {% endif %}
 
       <script>
-
+              $('.card-body').css({'display': 'none'});
           function toggleSignup(){
               $('#landing-image').css({'display': 'none'});
+              $('#card-body').css({'display': 'block'});
               $('#signup-form').css({'display': 'block'});
               $('#login-form').css({'display': 'none'});
           }
 
           function toggleLogin(){
+              $('.card-body').css({'display': 'block'});
               $('#landing-image').css({'display': 'none'});
               $('#signup-form').css({'display': 'none'});
               $('#login-form').css({'display': 'block'});
