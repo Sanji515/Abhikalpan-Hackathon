@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse, HttpResponse
 from account.forms import RegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from .models import Complaint
 import json
+from django.core import serializers
 from watson_developer_cloud import NaturalLanguageUnderstandingV1
 from watson_developer_cloud.natural_language_understanding_v1 import Features, KeywordsOptions,EntitiesOptions, RelationsOptions
 
@@ -54,6 +56,8 @@ def dashboard(request):
 	complaints = Complaint.objects.all()
 
 	if request.method == 'POST':
+		print('coming')
+		print(request.POST['meta_description'])
 		curr_complaint = Complaint.objects.create(
 			user=request.user,
 			title=request.POST['title'],
@@ -61,12 +65,14 @@ def dashboard(request):
 			description=request.POST['description'])
 
 		result = recognize(request.POST['description'])
+		curr_complaint = Complaint.objects.filter(id=curr_complaint.id)
+		curr_complaint = serializers.serialize('json', list(curr_complaint))
 
 		context = {
 			'result': result,
 			'curr_complaint': curr_complaint
 		}
-		return render(request, 'index/dashboard.html', context)
+		return HttpResponse(JsonResponse(context), content_type='application/json')
 
 	context = {
 		'complaints': complaints
