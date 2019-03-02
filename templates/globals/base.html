@@ -16,6 +16,7 @@
     <!-- Your custom styles (optional) -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
+    <!-- <link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.css' %}"> -->
 
     <style type="text/css">
         html,
@@ -77,9 +78,25 @@
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{% static 'js/mdb.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <script type="text/javascript">
+    	//Animation init
+          new WOW().init();
+
+          //Modal
+          $('#myModal').on('shown.bs.modal', function () {
+              $('#myInput').focus()
+          })
+
+          // Material Select Initialization
+	          // $(document).ready(function () {
+	          //     $('.mdb-select').material_select();
+	          // });
+    </script>
 
     {% block javascript %}
     {% endblock %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from account.forms import RegistrationForm
 from django.contrib.auth import authenticate, login, logout
+from .models import Complaint
 # Create your views here.
 
 def index(request):
@@ -31,8 +32,13 @@ def index(request):
 
 
 def dashboard(request):
+	complaints = Complaint.objects.all()
+	print('asdsa',complaints)
+	context = {
+		'complaints': complaints
+	}
+	return render(request, 'index/dashboard.html', context)
 
-	return render(request, 'index/dashboard.html', {})
 
 
 def LoginView(request):
@@ -52,4 +58,3 @@ def LoginView(request):
 		'form': form
 	}
 	return render(request, 'index/index.html', context)
-
