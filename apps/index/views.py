@@ -54,7 +54,6 @@ def index(request):
 @login_required
 def dashboard(request):
 	complaints = Complaint.objects.all()
-
 	if request.method == 'POST':
 		print('coming')
 		print(request.POST['meta_description'])
@@ -79,9 +78,19 @@ def dashboard(request):
 	}
 	return render(request, 'index/dashboard.html', context)
 
+@login_required
+def complaintDetails(request, id):
+	complaints = Complaint.objects.filter(id=id)
+	context = {
+		'complaints':complaints
+	}
+	return render(request, 'index/complaintDetails.html', context)
+
 
 
 def LoginView(request):
+	if request.user.is_authenticated:
+		return render(request, 'index/dashboard.html', {})
 	logout(request)
 	username = password = ''
 	if request.POST:
@@ -92,7 +101,7 @@ def LoginView(request):
 		if user is not None:
 			if user.is_active:
 				login(request, user)
-				return render(request, 'index/dashboard.html', {})
+				return redirect('index:dashboard')
 	form = RegistrationForm()
 	status = 4
 	context = {

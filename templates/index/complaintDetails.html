@@ -1,0 +1,86 @@
+{% extends 'globals/base.html' %} 
+{% load static %}
+
+{% block css %}
+	<style type="text/css">
+	#navbar {
+		background: -webkit-linear-gradient(45deg,#68d0ff,#453cf5 100%);
+    	background: 0 0,0 0,0 0,to(#453cf5);
+	}
+
+	body {
+		padding-top: 10%;
+		padding-left: 10%;
+	}
+
+
+	#nav-topbar {
+		padding-left: 0;
+		border-radius: 0;
+		flex-direction: row;
+	}
+
+	#nav-topbar .brand-container {
+		width: 225px;
+		/* Should match width of #nav-sidebar */
+		padding-left: 1rem;
+	}
+
+	#topbar-menu-container {
+		flex-direction: column;
+	}
+
+	.navbar-brand i {
+		margin-right: .5rem;
+	}
+
+	.navbar-toggler {
+		font-size: 1.5rem;
+		margin-top: .25rem;
+	}
+
+	.navbar-toggleable-sm .navbar-collapse,
+	.navbar-toggleable-md .navbar-collapse {
+		width: auto;
+		padding-left: 10px;
+	}
+
+	</style>
+	
+{% endblock %}  
+
+{% block body %}
+
+    <!--Main Navigation-->
+      {% include 'globals/navbar.html' %}
+    <!--Main Navigation-->
+
+   <div class="container-fluid">
+		<div class="row">
+			{% for complaint in complaints %}
+		      	<div class="card col-md-10">
+				  <div class="card-header">
+				    <h1>{{complaint.title}}</h1>
+				    <br>
+				    <h3 class="card-title">{{complaint.meta_description}}</h3>
+				  </div>
+				  <div class="card-body">
+				    <br>
+				    <h5 class="card-description">{{complaint.description}}</h5>
+				  </div>
+				</div>
+				<br>
+			{% endfor %}
+		</div>
+	</div>
+
+    {% block javascript %}
+    	<script type="text/javascript">
+    		$('.sidebar-expand button').click(function() {
+				$(this).toggleClass("flip-y"); 
+			  $('#nav-sidebar').toggleClass( "active" );
+			});
+    	</script>
+    {% endblock %}
+
+{% endblock %}
