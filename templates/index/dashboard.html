@@ -177,10 +177,18 @@
 				<div class="sidebar-content hidden-sm-down">
 					<ul class="nav nav-pills flex-column">
 						<li class="nav-item">
-							<a class="nav-link active" data-toggle="tab" href="#complaints">Complaints <span class="sr-only">(current)</span></a>
+							{% if result %}
+								<a class="nav-link" data-toggle="tab" href="#complaints">Complaints <span class="sr-only">(current)</span></a>
+							{% else %}
+								<a class="nav-link active" data-toggle="tab" href="#complaints">Complaints <span class="sr-only">(current)</span></a>
+							{% endif %}
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" data-toggle="tab" href="#new_complaint">File a Complaint</a>
+							{% if result %}
+								<a class="nav-link active" data-toggle="tab" href="#new_complaint">File a Complaint</a>
+							{% else %}
+								<a class="nav-link" data-toggle="tab" href="#new_complaint">File a Complaint</a>
+							{% endif %}
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#start">Analytics</a>
@@ -194,7 +202,11 @@
 			</nav>
 			<main>
 				<div class="tab-content">
+					{% if result %}
+					<div class="tab-pane" id="complaints">
+					{% else %}
 			    	<div class="tab-pane active" id="complaints">
+			    	{% endif %}
 			    		<br>
 						<div id="navbar" class="header">
 					      <div class="row d-flex justify-content-center">
@@ -220,7 +232,11 @@
 						{% endfor %}
 			    	</div>
 
+			    	{% if result %}
+			    	<div class="tab-pane active" id="new_complaint">
+			    	{% else %}
 			    	<div class="tab-pane" id="new_complaint">
+			    	{% endif %}
 			    		<br>
 			    		{% include 'index/new_complaint.html' %}
 			  		</div>
@@ -302,6 +318,27 @@
 				$(this).toggleClass("flip-y"); 
 			  $('#nav-sidebar').toggleClass( "active" );
 			});
+    	</script>
+
+    	<script type="text/javascript">
+    		function new_complaint(){
+    			$.ajax({
+    				type: 'POST',
+    				url: '/dashboard/',
+    				data: {
+    					'title': $('#title').val(),
+    					'meta_description': $('#meta_description').val(),
+    					'description': $('#description')
+    				},
+    				dataType: 'json',
+    				success: function(response){
+    					console.log(response);
+    				},
+    				error: function(rs, e){
+    					alert('error');
+    				}
+    			});
+    		}
     	</script>
     {% endblock %}
 
