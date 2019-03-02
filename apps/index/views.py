@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from django.http import JsonResponse, HttpResponse
 from account.forms import RegistrationForm
 from django.contrib.auth.decorators import login_required
@@ -52,7 +53,8 @@ def index(request):
 
 @login_required
 def dashboard(request):
-	complaints = Complaint.objects.all()
+	complaints = Complaint.objects.filter(user=request.user)
+	all_complaints = Complaint.objects.filter(~Q(user=request.user))
 	if request.method == 'POST':
 		print('coming')
 		print(request.POST['meta_description'])
@@ -75,7 +77,9 @@ def dashboard(request):
 
 	context = {
 		'complaints': complaints,
+
         'delete': 0,
+		'all_complaints': all_complaints
 	}
 	return render(request, 'index/dashboard.html', context)
 
