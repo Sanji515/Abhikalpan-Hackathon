@@ -41,7 +41,8 @@
                             <div class="card-body">
 
                               <!-- Login Form -->
-                              <form style="display: none;" id="login-form" name="">
+                              <form style="display: none;" id="login-form" name="" action="{% url 'index:login' %}" method="POST">
+                                {% csrf_token %}
                                 <!-- Heading -->
                                 <h3 class="dark-grey-text text-center">
                                   <strong>Login</strong>
@@ -50,17 +51,17 @@
 
                                 <div class="md-form">
                                   <i class="fas fa-user prefix grey-text"></i>
-                                  <input type="text" id="form3" class="form-control">
+                                  <input type="text" id="form3" class="form-control" name="username">
                                   <label for="form3">Username</label>
                                 </div>
                                 <div class="md-form">
                                   <i class="fas fa-lock prefix grey-text"></i>
-                                  <input type="password" id="form2" class="form-control">
+                                  <input type="password" id="form2" class="form-control" name="password">
                                   <label for="form2">Password</label>
                                 </div>
 
                                 <div class="text-center">
-                                  <button class="btn btn-indigo">Sign Up</button>
+                                  <button class="btn btn-indigo">Login</button>
                                   <hr>
                                   <label>Start with a new account <a onclick="toggleSignup()" style="display: inline-block; color: #453cf5">Sign Up</a></label>
                                 </div>
@@ -70,31 +71,35 @@
 
 
                               <!-- Signup Form -->
-                              <form style="display: none;" id="signup-form" name="">
+                              <form style="display: none;" id="signup-form" name="" action="{% url 'index:index'%}" method="POST">
+                                {% csrf_token %}
                                 <!-- Heading -->
                                 <h3 class="dark-grey-text text-center">
                                   <strong>Signup</strong>
                                 </h3>
                                 <hr>
-
+                                {{form.username.errors}}
                                 <div class="md-form">
                                   <i class="fas fa-user prefix grey-text"></i>
                                   <!-- <input type="text" id="form3" class="form-control"> -->
                                   {{form.username}}
                                   <label for="form3">Username</label>
                                 </div>
+                                {{form.email.errors}}
                                 <div class="md-form">
                                   <i class="fas fa-envelope prefix grey-text"></i>
                                   <!-- <input type="email" id="form2" class="form-control"> -->
                                   {{form.email}}
                                   <label for="form2">Email</label>
                                 </div>
+                                {{form.password1.errors}}
                                 <div class="md-form">
                                   <i class="fas fa-lock prefix grey-text"></i>
                                   <!-- <input type="password" id="form2" class="form-control"> -->
                                   {{form.password1}}
                                   <label for="form2">Password</label>
                                 </div>
+                                {{form.password2.errors}}
                                 <div class="md-form">
                                   <i class="fas fa-check prefix grey-text"></i>
                                   <!-- <input type="password" id="form2" class="form-control"> -->
@@ -103,7 +108,7 @@
                                 </div>
 
                                 <div class="text-center">
-                                  <button class="btn btn-indigo">Login</button>
+                                  <button class="btn btn-indigo">Sign Up</button>
                                   <hr>
                                   <label>Start with a new account <a onclick="toggleLogin()" style="display: inline-block; color: #453cf5">Login</a></label>
                                 </div>
@@ -193,7 +198,38 @@
     </footer>
     <!--/.Footer-->
 
+    <div id="successModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Success</h2>
+          </div>
+          <div class="modal-body">
+            <h4>You have been succesfully registered</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     {% block javascript %}
+
+        {% if status == 3 %}
+            <script type="text/javascript">
+                toggleSignup();
+            </script>
+        {% endif %}
+
+        {% if status == 2 %}
+            <script type="text/javascript">
+                $("#successModal").modal() ;
+            </script>
+        {% endif %}
 
       <script>
           //Animation init

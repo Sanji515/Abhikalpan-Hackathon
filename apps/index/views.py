@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from account.forms import RegistrationForm
+from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 def index(request):
@@ -7,11 +8,22 @@ def index(request):
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect('index:index');
+			status = 2 
+			context = {
+				'status' : status,
+				'form': form
+			}
+			return render(request, 'index/index.html', context);
+		else:
+			status = 3
+			context = {
+				'form': form,
+				'status': status
+			}
+			return render(request, 'index/index.html', context)
 
 	else:
 		form = RegistrationForm()
-
 	context = {
 		'form': form
 	}
@@ -21,3 +33,23 @@ def index(request):
 def dashboard(request):
 
 	return render(request, 'index/dashboard.html', {})
+
+
+def LoginView(request):
+	logout(request)
+	username = password = ''
+	if request.POST:
+		username = request.POST['username']
+		password = request.POST['password']
+
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+				return render(request, 'index/dashboard.html', {})
+	form = RegistrationForm()
+	context = {
+		'form': form
+	}
+	return render(request, 'index/index.html', context)
+

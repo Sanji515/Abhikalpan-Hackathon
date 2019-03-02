@@ -19,11 +19,3 @@ class RegistrationForm(UserCreationForm):
 
         for fieldname in ['username', 'email', 'password1', 'password2']:
             self.fields[fieldname].widget.attrs['class'] = 'form-control'
-
-        def save(self, commit=True):
-            user = super(RegistrationForm, self).save(commit=False)
-            user.email = cleaned_data("email")
-
-            if commit:
-                user.save()
-            return user
