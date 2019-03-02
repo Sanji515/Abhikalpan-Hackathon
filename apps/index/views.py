@@ -21,7 +21,21 @@ def index(request):
 
 def dashboard(request):
 	complaints = Complaint.objects.all()
-	print('asdsa',complaints)
+
+	if request.method == 'POST':
+		Complaint.objects.create(
+			user=request.user,
+			title=request.POST['title'],
+			meta_description=request.POST['meta_description'],
+			description=request.POST['description'])
+
+		result = detect_sensitive_text(request.POST['description'])
+
+		context = {
+			'result': result
+		}
+		return render(request, 'index/dashboard.html', context)
+
 
 	context = {
 		'complaints': complaints

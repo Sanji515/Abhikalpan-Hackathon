@@ -1,0 +1,78 @@
+<!-- Section: form gradient -->
+{% if result %}
+  
+  <div class="card">
+    <!--Card content-->
+    <div class="card-block">
+        <!--Title-->
+        <h4 class="card-title">Card title</h4>
+        <!--Text-->
+        {% for res in result %}
+          <p class="card-text">res['text']</p><br>
+          <p class="card-text">res['type']</p>
+        {% endfor %}
+        <a href="#" class="btn btn-primary" ripple-radius>Button</a>
+    </div>
+    <!--/.Card content-->
+
+  </div>
+
+{% else %}
+<section class="form-gradient mb-5">
+
+  <!--Form with header-->
+  <div class="card">
+
+    <!--Header-->
+    <div id="navbar" class="header">
+
+      <div class="row d-flex justify-content-center">
+        <h3 class="white-text mb-0 py-5 font-weight-bold">File a Complaint</h3>
+      </div>
+
+    </div>
+    <!--Header-->
+
+    <div class="card-body mx-4">
+      <form action="{% url 'index:dashboard' %}" method="POST">
+      <div class="md-form">
+        <i class="fas fa-user prefix grey-text"></i>
+        <input type="text" id="form104" name="title" class="form-control">
+        <label for="form104">Title</label>
+      </div>
+
+      <div class="md-form">
+        <i class="fas fa-envelope prefix grey-text"></i>
+        <input type="text" id="form105" name="meta_description" class="form-control">
+        <label for="form105">Meta Description</label>
+      </div>
+
+      <div class="md-form">
+        <i class="fas fa-pencil-alt prefix grey-text"></i>
+        <textarea type="text" id="form107" name="description" class="md-textarea form-control" rows="5"></textarea>
+        <label for="form107">Description</label>
+      </div>
+
+
+      <!--Grid row-->
+      <div class="row d-flex align-items-center mb-3 mt-4">
+
+        <!--Grid column-->
+        <div class="col-md-12">
+          <div class="text-center">
+            <button type="submit" class="btn btn-rounded btn-primary btn-md">Submit</button>
+          </div>
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+    </form>
+    </div>
+
+  </div>
+  <!--/Form with header-->
+
+</section>
+<!-- Section: form gradient -->
+{% endif %}
