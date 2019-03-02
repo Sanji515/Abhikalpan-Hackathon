@@ -3,15 +3,12 @@
   
   <div class="card">
     <!--Card content-->
+    <br>
     <div class="card-block">
-        <!--Title-->
-        <h4 class="card-title">Card title</h4>
-        <!--Text-->
         {% for res in result %}
-          <p class="card-text">res['text']</p><br>
-          <p class="card-text">res['type']</p>
+          <p class="card-text">{{res.type}}</p><br>
+          <p class="card-text">{{res.text}}</p>
         {% endfor %}
-        <a href="#" class="btn btn-primary" ripple-radius>Button</a>
     </div>
     <!--/.Card content-->
 
@@ -34,22 +31,22 @@
     <!--Header-->
 
     <div class="card-body mx-4">
-      <form action="{% url 'index:dashboard' %}" method="POST">
+      <form>{% csrf_token %}
       <div class="md-form">
         <i class="fas fa-user prefix grey-text"></i>
-        <input type="text" id="form104" name="title" class="form-control">
+        <input type="text" id="title" name="title" class="form-control">
         <label for="form104">Title</label>
       </div>
 
       <div class="md-form">
         <i class="fas fa-envelope prefix grey-text"></i>
-        <input type="text" id="form105" name="meta_description" class="form-control">
+        <input type="text" id="meta_description" name="meta_description" class="form-control">
         <label for="form105">Meta Description</label>
       </div>
 
       <div class="md-form">
         <i class="fas fa-pencil-alt prefix grey-text"></i>
-        <textarea type="text" id="form107" name="description" class="md-textarea form-control" rows="5"></textarea>
+        <textarea type="text" id="description" name="description" class="md-textarea form-control" rows="5"></textarea>
         <label for="form107">Description</label>
       </div>
 
@@ -60,7 +57,7 @@
         <!--Grid column-->
         <div class="col-md-12">
           <div class="text-center">
-            <button type="submit" class="btn btn-rounded btn-primary btn-md">Submit</button>
+            <button type="button" onclick="new_complaint()" class="btn btn-rounded btn-primary btn-md">Submit</button>
           </div>
         </div>
         <!--Grid column-->
