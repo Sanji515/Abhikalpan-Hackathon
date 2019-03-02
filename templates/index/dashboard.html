@@ -253,20 +253,26 @@
 
 					    </div>
 						<br>
-						{% if complaints.count == 0 %}
-							<center><h3>You haven't filed a complaint yet!</h3></center>
-							<br>
-						{% else %}
-					      	{% for complaint in complaints %}
-						      	<div class="card">
-								  <div class="card-header">
-								    <a href="{% url 'index:details' complaint.id %}"><h2>{{complaint.title}}</h2></a>
-								    <h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
-								  </div>
-								</div>
-								<br>
-							{% endfor %}
-						{% endif %}
+								<!-- <div class="col-7"> -->
+								{% if complaints.count == 0 %}
+									<center><h3>You haven't filed a complaint yet!</h3></center>
+									<br>
+								{% else %}
+									<div style="margin-right: 5%; margin-left: 5%;">
+							      	{% for complaint in complaints %}
+							      	
+								      	<div class="card">
+										  <div class="card-header">
+										    <a href="{% url 'index:details' complaint.id %}"><h2>{{complaint.title}}</h2></a>
+										    <h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
+										  </div>
+										</div>
+										<br>
+									
+									{% endfor %}
+									</div>
+								{% endif %}
+								<!-- </div> -->
 			    	</div>
 
 			    	<div class="tab-pane" id="allComplaints">

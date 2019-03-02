@@ -4,7 +4,7 @@ from django.http import JsonResponse, HttpResponse
 from account.forms import RegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from .models import Complaint
+from .models import Complaint, Comment
 import json
 from django.core import serializers
 from watson_developer_cloud import NaturalLanguageUnderstandingV1
@@ -83,9 +83,12 @@ def dashboard(request):
 
 @login_required
 def complaintDetails(request, id):
-	complaints = Complaint.objects.filter(id=id)
+	complaint = Complaint.objects.get(id=id)
+	comment = Comment.objects.filter(complaint=complaint)
+
 	context = {
-		'complaints':complaints
+		'complaint': complaint,
+		'comment': comment
 	}
 	return render(request, 'index/complaintDetails.html', context)
 
@@ -120,3 +123,21 @@ def LogoutView(request):
 		'form':form
 	}
 	return render(request, 'index/index.html', context)
+
+def CommentView(request):
+	if request.method == 'POST':
+		complaint_id = request.POST['complaint_id']
+		complaint = Complaint.objects.get(id=request.POST['complaint_id'])
+		Comment.objects.create(
+			user=request.user,
+			complaint=complaint,
+			comment=request.POST['comment'])
+
+		comment = Comment.objects.filter(complaint=complaint).order_by('-commented_at')
+		comment = serializers.serialize('json', list(comment))
+
+		context = {
+			'comment': comment
+		}
+
+		return HttpResponse(JsonResponse(context), content_type='application/json')

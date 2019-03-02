@@ -8,5 +8,6 @@ urlpatterns = [
 	path('dashboard/', views.dashboard, name='dashboard'),
 	path('login/', views.LoginView, name='login'),
 	path('logout/', views.LogoutView, name='logout'),
-	path('details/<int:id>', views.complaintDetails, name='details')
+	path('details/<int:id>', views.complaintDetails, name='details'),
+	path('new_comment/', views.CommentView, name='comment')
 ]
