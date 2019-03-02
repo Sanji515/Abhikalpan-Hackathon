@@ -196,7 +196,13 @@
 				<div class="tab-content">
 			    	<div class="tab-pane active" id="complaints">
 			    		<br>
-						<h1><center>Your Complaints</center></h1>
+						<div id="navbar" class="header">
+					      <div class="row d-flex justify-content-center">
+					      	<h2>Hii {{request.user.username}}</h2>
+					        <h3 class="white-text mb-0 py-5 font-weight-bold">Your Complaints</h3>
+					      </div>
+
+					    </div>
 						<br>
 				      	{% for complaint in complaints %}
 					      	<div class="card">
@@ -215,23 +221,25 @@
 			    	</div>
 
 			    	<div class="tab-pane" id="new_complaint">
-
+			    		<br>
+			    		{% include 'index/new_complaint.html' %}
 			  		</div>
 			      <div class="tab-pane" id="status">3</div>
 			      <div class="tab-pane" id="reports">4</div>
 			    </div>
 
 				<!--Footer-->
-			    <footer class="page-footer text-center text-md-left blue-grey lighten-5 pt-0">
-			        <div style="background-color: #5991fb;">
-			            <div class="container">
-			                <!--Grid row-->
-			                <div class="row py-4 d-flex align-items-center">
+			    <footer style="margin-top: 10px;" class="page-footer text-center text-md-left blue-grey lighten-5 pt-0">
 
-			                </div>
-			                <!--Grid row-->
-			            </div>
-			        </div>
+			    	<div style="">
+			           <div class="container">
+			               <!--Grid row-->
+			               <div class="py-1">
+
+			               </div>
+			               <!--Grid row-->
+			           </div>
+			       </div>
 
 			        <!--Footer Links-->
 			        <div class="container mt-5 mb-4 text-center text-md-left">
