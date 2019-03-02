@@ -378,7 +378,11 @@ function downloadJSAtOnload() {
     	</script>
 
     	<script type="text/javascript">
-				console.log("hii");
+    		function setCharAt(str,index,chr) {
+			    if(index > str.length-1) return str;
+			    return str.substr(0,index) + chr + str.substr(index+1);
+			}
+
     		function new_complaint(){
     			$.ajax({
     				type: 'POST',
@@ -386,11 +390,54 @@ function downloadJSAtOnload() {
     				data: {
     					'title': $('#title').val(),
     					'meta_description': $('#meta_description').val(),
-    					'description': $('#description')
+    					'description': $('#description').val(),
+    					'csrfmiddlewaretoken': '{{csrf_token}}'
     				},
-    				dataType: 'json',
+    				
     				success: function(response){
-    					console.log(response);
+    					var result = response.result;
+    					curr_complaint = JSON.parse(response.curr_complaint);
+    					for(var i=0;i<curr_complaint.length;i++){
+    						var description = curr_complaint[i].fields['description'];
+    					}
+
+    					console.log(description[1]);
+
+    					for(var i=0;i<result.length;i++){
+    						var text = result[i].text;
+    						var type = result[i].type;
+
+    						var start;
+    						var end;
+    						console.log(text.length);
+    						for(var j=0;j<description.length;j++){
+    							start = j;
+    							end = j;
+    							temp = j
+    							for(var k=0;k<text.length;k++){
+    								console.log("description"+description[j]);
+    								console.log("text"+text[k]);
+    								if(description[j]==text[k]){
+    									end = j;
+    									j++;
+    								}
+    								else{
+    									break;
+    								}
+    							}
+    							if(start!=end){
+    								console.log(start);
+    								console.log(end);
+    								for(var j=start;j<=end;j++){
+		    							description = setCharAt(description,j,'$');
+		    						}
+		    						console.log(description);
+    							}
+    						}	
+    					}
+    					$('#complaint-form').css({'display': 'none'});
+    					$('#result-tab').css({'display': 'block'});
+    					$('#card-block').append(description);
     				},
     				error: function(rs, e){
     					alert('error');

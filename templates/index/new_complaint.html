@@ -1,21 +1,14 @@
 <!-- Section: form gradient -->
-{% if result %}
-  
-  <div class="card">
+  <div style="display: none;" id="result-tab" class="card">
     <!--Card content-->
     <br>
-    <div class="card-block">
-        {% for res in result %}
-          <p class="card-text">{{res.type}}</p><br>
-          <p class="card-text">{{res.text}}</p>
-        {% endfor %}
+    <div id="card-block" class="card-block">
     </div>
     <!--/.Card content-->
 
   </div>
 
-{% else %}
-<section class="form-gradient mb-5">
+<section id="complaint-form" class="form-gradient mb-5">
 
   <!--Form with header-->
   <div class="card">
@@ -72,4 +65,3 @@
 
 </section>
 <!-- Section: form gradient -->
-{% endif %}
