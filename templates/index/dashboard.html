@@ -534,7 +534,7 @@ function downloadJSAtOnload() {
 									break ;
 								}
 							}
-							if(start!=end && flag==0){
+							if(start!=end && flag==0 && k==text.length){
 								// console.log(start);
 								// console.log(end);
 								for(var j=start;j<=end;j++){
@@ -572,7 +572,7 @@ function downloadJSAtOnload() {
 									break;
 								}
 							}
-							if(start!=end){
+							if(start!=end && k==text.length){
 								// console.log(start);
 								// console.log(end);
 								for(var j=start;j<=end;j++){
