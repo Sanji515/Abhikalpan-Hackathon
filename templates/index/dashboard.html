@@ -550,7 +550,9 @@
     				unchecked.push($("#Check10").attr("name")) ;
     			}
     			var originalDescription = origDescription ;
+    			console.log(unchecked.length);
     			if (unchecked.length > 0){
+    				console.log('cdcd');
     				for(var i=0;i<result.length;i++){
 						var text = result[i].text;
 						var type = result[i].type;
@@ -561,7 +563,8 @@
 						for(var j=0;j<origDescription.length;j++){
 							start = j;
 							end = j;
-							temp = j
+							temp = j;
+
 							for(var k=0;k<text.length;k++){
 								// console.log("description"+description[j]);
 								// console.log("text"+text[k]);
@@ -580,7 +583,7 @@
 									break ;
 								}
 							}
-							if(start!=end && flag==0 && k==text.length){
+							if(start!=end && flag==0){
 								// console.log(start);
 								// console.log(end);
 								for(var j=start;j<=end;j++){
