@@ -272,6 +272,11 @@
 											<footer class="blockquote-footer">
 												{{complaint.created_at}}
 											</footer>
+
+											<br>
+											<footer style="color: rgba(0,0,0,.6); padding-left: 50px;">
+												<small>{{ complaint.like_complaint.count }} Likes</small><small style="margin-left: 40px;">{{ complaint.for_complaint.count }} Comments</small>
+											</footer>
 											</div>
 											<div class= "col-2">
 												<div style="float:right; position: relative;">
@@ -315,6 +320,10 @@
 										<footer class="blockquote-footer">
 											{{complaint.created_at}}
 										</footer>
+										<br>
+										<footer style="color: rgba(0,0,0,.6); padding-left: 50px;">
+											<small>{{ complaint.like_complaint.count }} Likes</small><small style="margin-left: 40px;">{{ complaint.for_complaint.count }} Comments</small>
+										</footer>
 									</blockquote>
 								  </div>
 								</div>
@@ -357,7 +366,7 @@
     {% block javascript %}
 
 		<script type="text/javascript">
-function downloadJSAtOnload() {
+		function downloadJSAtOnload() {
 			var x = document.getElementById("snackbar");
 			x.className = "show";
 			setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);

@@ -4,7 +4,7 @@ from django.http import JsonResponse, HttpResponse
 from account.forms import RegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from .models import Complaint, Comment
+from .models import Complaint, Comment, Like
 import json
 from django.core import serializers
 from watson_developer_cloud import NaturalLanguageUnderstandingV1
@@ -115,9 +115,19 @@ def complaintDetails(request, id):
     complaint = Complaint.objects.get(id=id)
     comment = Comment.objects.filter(complaint=complaint)
 
+    try:
+        like_object = Like.objects.get(complaint=complaint, liked_by=request.user)
+        like = 1
+    except:
+        like = 0
+
+    likes_count = Like.objects.filter(complaint=complaint).count()
+
     context = {
         'complaint': complaint,
-        'comment': comment
+        'comment': comment,
+        'like': like,
+        'likes_count': likes_count
     }
     return render(request, 'index/complaintDetails.html', context)
 
@@ -190,4 +200,26 @@ def CommentView(request):
             'comment': comment
         }
 
+        return HttpResponse(JsonResponse(context), content_type='application/json')
+
+
+def LikeView(request):
+    if request.method == 'POST':
+        complaint = Complaint.objects.get(id=request.POST['complaint_id'])
+        try:
+            like_object = Like.objects.get(complaint=complaint, liked_by=request.user)
+            like_object.delete()
+            like = 0
+        except:
+            Like.objects.create(
+                complaint=complaint,
+                liked_by=request.user)
+            like = 1
+
+        likes_count = Like.objects.filter(complaint=complaint).count()
+
+        context = {
+            'like': like,
+            'likes_count': likes_count
+        }
         return HttpResponse(JsonResponse(context), content_type='application/json')
