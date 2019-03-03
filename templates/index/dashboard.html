@@ -21,6 +21,13 @@
 		width: 100%
 	}
 
+	#headers {
+		font-size: 1rem;
+		font-weight: 500;
+		padding-top: 10px;
+		color: #000;
+	}
+
 	#nav-topbar {
 		padding-left: 0;
 		border-radius: 0;
@@ -267,8 +274,17 @@
 								  	<blockquote class="blockquote mb-0">
 										<div class="row">
 											<div class="col-10">
-											<a href="{% url 'index:details' complaint.id %}"><h2>{{complaint.title}}</h2></a>
-											<h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
+												<span>
+													<center>
+													<h6 style="display: inline-block;" id="headers">Complaint To:</h6>
+								  					<h5 style="display: inline-block;">{{complaint.company.company_name}}</h5>
+								  					</center>
+												</span>
+											
+											<h6 style="display: inline-block;" id="headers">Title:</h6>	
+											<a href="{% url 'index:details' complaint.id %}"><h2 style="margin-inline-start: 20px; writing-mode: horizontal-tb;">{{complaint.title}}</h2></a>
+											<h6 style="display: inline-block;" id="headers">Meta Description:</h6>
+											<h6 class="card-title"><b style="margin-inline-start: 20px; writing-mode: horizontal-tb;">{{complaint.meta_description}}</b></h6>
 											<footer class="blockquote-footer">
 												{{complaint.created_at}}
 											</footer>
@@ -315,8 +331,16 @@
 						      	<div style="margin-right: 5%; margin-left: 5%;" class="card">
 								  <div class="card-header">
 								  	<blockquote class="blockquote mb-0">
-										<a href="{% url 'index:details' complaint.id %}"><h2>{{complaint.title}}</h2></a>
-										<h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
+								  		<span>
+													<center>
+													<h6 style="display: inline-block;" id="headers">Complaint To:</h6>
+								  					<h5 style="display: inline-block;">{{complaint.company.company_name}}</h5>
+								  					</center>
+												</span>
+										<h6 style="display: inline-block;" id="headers">Title:</h6>	
+										<a href="{% url 'index:details' complaint.id %}"><h2 style="margin-inline-start: 20px; writing-mode: horizontal-tb;">{{complaint.title}}</h2></a>
+										<h6 style="display: inline-block;" id="headers">Meta Description:</h6>
+										<h6 class="card-title"><b style="margin-inline-start: 20px; writing-mode: horizontal-tb;">{{complaint.meta_description}}</b></h6>
 										<footer class="blockquote-footer">
 											{{complaint.created_at}}
 										</footer>
@@ -350,7 +374,7 @@
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
-            <h2 class="modal-title">Success</h2>
+            <h2 class="modal-title white-text mb-0 py-5 font-weight-bold">Success</h2>
           </div>
           <div class="modal-body">
             <h4>The complaint has been successfully submitted and publicly posted after redaction.</h4>
@@ -364,6 +388,13 @@
     </div>
 
     {% block javascript %}
+
+    	<script type="text/javascript">
+    		function clickedCompanyName(obj){
+    			var value = $(obj).html();
+    			$('#dropdown-button').html(value);
+    		}
+    	</script>
 
 		<script type="text/javascript">
 		function downloadJSAtOnload() {
@@ -422,6 +453,11 @@
 			var complaintID ;
     		
     		function new_complaint(){
+    			if($('#dropdown-button').html() == 'To (Company)'){
+    				alert('Please select the company name');
+    				return false;
+    			}
+
     			$.ajax({
     				type: 'POST',
     				url: '/dashboard/',
@@ -429,6 +465,7 @@
     					'title': $('#title').val(),
     					'meta_description': $('#meta_description').val(),
     					'description': $('#description').val(),
+    					'company_name': $('#dropdown-button').html(),
     					'csrfmiddlewaretoken': '{{csrf_token}}'
     				},
 
@@ -596,6 +633,8 @@
 					$('#card-block').html(description);
 				}
     		}
+
+    		$('#your-custom-id').mdbDropSearch();
     	</script>
     {% endblock %}
 {% endblock %}
