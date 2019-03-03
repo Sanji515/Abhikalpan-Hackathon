@@ -450,8 +450,6 @@ function downloadJSAtOnload() {
     							end = j;
     							temp = j
     							for(var k=0;k<text.length;k++){
-    								// console.log("description"+description[j]);
-    								// console.log("text"+text[k]);
     								if(description[j]==text[k]){
     									end = j;
     									j++;
@@ -460,9 +458,7 @@ function downloadJSAtOnload() {
     									break;
     								}
     							}
-    							if(start!=end){
-    								// console.log(start);
-    								// console.log(end);
+    							if(start!=end && k==text.length){
     								for(var j=start;j<=end;j++){
 		    							description = setCharAt(description,j,'$');
 		    						}
