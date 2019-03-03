@@ -36,6 +36,9 @@
 	#topbar-menu-container {
 		flex-direction: column;
 	}
+	.fas fa-trash-alt {
+		size : 10px;
+	}
 
 	.navbar-brand i {
 		margin-right: .5rem;
@@ -206,10 +209,16 @@
 
 {% block body %}
 
-    {% if request.user.is_authenticated %}
-    	<div class="alert alert-info" id="snackbar">
-		  <strong>Hello,  {{request.user.username}}</strong>
-		</div>
+    {% if request.user.is_authenticated %} 	
+		{% if first_time_login == 1 %}
+		<div class="alert alert-info" id="snackbar">
+	  		<strong>Hello,  {{request.user.username}}</strong>
+	  	</div>
+		{% elif delete == 1 %}
+		<div class="alert alert-info" id="snackbar">
+	 		<strong>Deleted</strong>
+	 	</div>
+	    {% endif %}	
     {% endif %}
 
     <!--Main Navigation-->
@@ -224,18 +233,13 @@
 				<div class="sidebar-content hidden-sm-down">
 					<ul class="nav nav-pills flex-column">
 						<li class="nav-item">
-							{% if result %}
-								<a class="nav-link" data-toggle="tab" href="#complaints">Complaints <span class="sr-only">(current)</span></a>
-							{% else %}
-								<a class="nav-link active" data-toggle="tab" href="#complaints">Complaints <span class="sr-only">(current)</span></a>
-							{% endif %}
+							<a class="nav-link active" data-toggle="tab" href="#myComplaints">My Complaints <span class="sr-only">(current)</span></a>
 						</li>
 						<li class="nav-item">
-							{% if result %}
-								<a class="nav-link active" data-toggle="tab" href="#new_complaint">File a Complaint</a>
-							{% else %}
-								<a class="nav-link" data-toggle="tab" href="#new_complaint">File a Complaint</a>
-							{% endif %}
+							<a class="nav-link" data-toggle="tab" href="#allComplaints">All Complaints </a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#new_complaint">File a Complaint</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#start">Analytics</a>
@@ -249,11 +253,7 @@
 			</nav>
 			<main>
 				<div class="tab-content">
-					{% if result %}
-					<div class="tab-pane" id="complaints">
-					{% else %}
-			    	<div class="tab-pane active" id="complaints">
-			    	{% endif %}
+			    	<div class="tab-pane active" id="myComplaints">
 			    		<br>
 						<div id="navbar" class="header">
 					      <div class="row d-flex justify-content-center">
@@ -262,22 +262,74 @@
 
 					    </div>
 						<br>
-				      	{% for complaint in complaints %}
-					      	<div class="card">
-							  <div class="card-header">
-							    <a href="{% url 'index:details' complaint.id %}"><h2>{{complaint.title}}</h2></a>
-							    <h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
-							  </div>
-							</div>
+
+						{% if complaints.count == 0 %}
+							<center><h3>You haven't filed a complaint yet!</h3></center>
 							<br>
-						{% endfor %}
+						{% else %}
+					      	{% for complaint in complaints %}
+						      	<div style="margin-right: 5%; margin-left: 5%;" class="card">
+								  <div class="card-header">
+								  	<blockquote class="blockquote mb-0">
+										<div class="row">
+											<div class="col-10">
+											<a href="{% url 'index:details' complaint.id %}"><h2>{{complaint.title}}</h2></a>
+											<h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
+											<footer class="blockquote-footer">
+												{{complaint.created_at}}
+											</footer>
+											</div>
+											<div class= "col-2">
+												<div style="float:right; position: relative;">
+													<form action="{% url 'index:deleteDetails' complaint.id %}" method="POST">{% csrf_token %}
+														<button style="background-color: transparent; border: none;" type="submit" class="trashhref">
+															<i class="fas fa-trash-alt fa-lg" style="color:black;"></i>
+														</button>
+													</form>
+		
+												</div>
+											</div>
+										</div>
+									</blockquote>
+								  </div>
+								</div>
+								<br>
+							{% endfor %}
+						{% endif %}
 			    	</div>
 
-			    	{% if result %}
-			    	<div class="tab-pane active" id="new_complaint">
-			    	{% else %}
+			    	<div class="tab-pane" id="allComplaints">
+			    		<br>
+						<div id="navbar" class="header">
+					      <div class="row d-flex justify-content-center">
+					        <h3 class="white-text mb-0 py-5 font-weight-bold">All Complaints</h3>
+					      </div>
+
+					    </div>
+						<br>
+						{% if all_complaints.count == 0 %}
+							<center><h3>No complaints found!</h3></center>
+
+							<br>
+						{% else %}
+					      	{% for complaint in all_complaints %}
+						      	<div style="margin-right: 5%; margin-left: 5%;" class="card">
+								  <div class="card-header">
+								  	<blockquote class="blockquote mb-0">
+										<a href="{% url 'index:details' complaint.id %}"><h2>{{complaint.title}}</h2></a>
+										<h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
+										<footer class="blockquote-footer">
+											{{complaint.created_at}}
+										</footer>
+									</blockquote>
+								  </div>
+								</div>
+								<br>
+							{% endfor %}
+						{% endif %}
+			    	</div>
+
 			    	<div class="tab-pane" id="new_complaint">
-			    	{% endif %}
 			    		<br>
 			    		{% include 'index/new_complaint.html' %}
 			  		</div>
@@ -376,7 +428,7 @@ function downloadJSAtOnload() {
     					'description': $('#description').val(),
     					'csrfmiddlewaretoken': '{{csrf_token}}'
     				},
-    				
+
     				success: function(response){
     					result = response.result;
     					curr_complaint = JSON.parse(response.curr_complaint);
@@ -415,7 +467,7 @@ function downloadJSAtOnload() {
 		    							description = setCharAt(description,j,'$');
 		    						}
     							}
-    						}	
+    						}
     					}
     					$('#complaint-form').css({'display': 'none'});
     					$('#result-tab').css({'display': 'block'});
