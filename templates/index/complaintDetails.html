@@ -38,11 +38,21 @@
 		font-size: 1.5rem;
 		margin-top: .25rem;
 	}
+	#headers {
+			font-size: 1rem;
+			font-weight: 500;
+			padding-top: 10px;
+			color: #000;
 
+	}
 	.navbar-toggleable-sm .navbar-collapse,
 	.navbar-toggleable-md .navbar-collapse {
 		width: auto;
 		padding-left: 10px;
+	}
+	.far {
+		padding-bottom: 4px;
+		padding-top: 4px;
 	}
 
 	</style>
@@ -53,21 +63,32 @@
 
     <!--Main Navigation-->
       {% include 'globals/navbar.html' %}
-    <!--Main Navigation-->
-
+		<!--Main Navigation-->
+		<div class="container-fluid">
+				<div class="row" >
+				      	<div class="card col-md-10" style="background-color:grey;">
+			<i class="far fa-clock" style="color:#FFF"> {{complaint.created_at }}</i>
+			</div>
+				</div>
+			</div>
    <div class="container-fluid">
 		<div class="row">
+				
 		      	<div class="card col-md-10">
-				  <div class="card-header">
-				    <h1>{{complaint.title}}</h1>
-				    <br>
+				  <div >
+						
+						<h6 id="headers">Title :</h6>
+				    <h3>{{complaint.title}}</h3>
+						
+						<h6 id="headers">Meta-Description :</h6>
 				    <h3 class="card-title">{{complaint.meta_description}}</h3>
 				  </div>
-				  <div class="card-body">
-				    <br>
+				  <div>
+						<br>
+						<h6 id="headers">Description :</h6>
 				    <h5 class="card-description">{{complaint.description}}</h5>
 				  </div>
-				  	<button type="button" id="like-button" onclick="likeButton('{{complaint.id}}')" style="width: 110px;" class="btn btn-rounded btn-primary btn-md">
+				  	<button type="button" id="like-button" onclick="likeButton('{{complaint.id}}')" style="width: 110px; margin-top: 30px;" class="btn btn-rounded btn-primary btn-md">
 				  		{% if like == 0 %}
 				  			<i class="far fa-thumbs-up"></i> Like
 				  		{% elif like == 1 %}
@@ -76,11 +97,11 @@
 				  	</button>
 
 				  	<footer style="color: rgba(0,0,0,.6); padding-left: 50px;">
-						<small id="like-count">{{ likes_count }} Likes</small><small id="comment-count" style="margin-left: 40px;">{{ comment.count }} Comments</small>
+						<small id="like-count">{% if likes_count == 1 %}{{ likes_count }} Like{% else %}{{ likes_count }} Likes{% endif %}</small><small id="comment-count" style="margin-left: 30px;">{{ comment.count }} Comments</small>
 					</footer>
-				  <hr>
 
-					<form>
+					<form class="comment_form">
+							<hr>
 						<div class="md-form">
 							<i class="far fa-comment-alt prefix grey-text"></i>
 							<textarea type="text" id="comment" name="comment" class="md-textarea form-control" rows="3"></textarea>

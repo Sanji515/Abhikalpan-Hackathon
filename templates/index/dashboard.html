@@ -241,12 +241,6 @@
 						<li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#new_complaint">File a Complaint</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-toggle="tab" href="#start">Analytics</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-toggle="tab" href="#start">Export</a>
-						</li>
 					</ul>
 				</div>
 
@@ -277,6 +271,11 @@
 											<h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
 											<footer class="blockquote-footer">
 												{{complaint.created_at}}
+											</footer>
+
+											<br>
+											<footer style="color: rgba(0,0,0,.6); padding-left: 50px;">
+												<small>{{ complaint.like_complaint.count }} Likes</small><small style="margin-left: 40px;">{{ complaint.for_complaint.count }} Comments</small>
 											</footer>
 											</div>
 											<div class= "col-2">
@@ -323,7 +322,7 @@
 										</footer>
 										<br>
 										<footer style="color: rgba(0,0,0,.6); padding-left: 50px;">
-											<small>{{ likes }} Likes</small><small style="margin-left: 40px;">{{ comments }} Comments</small>
+											<small>{{ complaint.like_complaint.count }} Likes</small><small style="margin-left: 40px;">{{ complaint.for_complaint.count }} Comments</small>
 										</footer>
 									</blockquote>
 								  </div>
@@ -367,7 +366,7 @@
     {% block javascript %}
 
 		<script type="text/javascript">
-function downloadJSAtOnload() {
+		function downloadJSAtOnload() {
 			var x = document.getElementById("snackbar");
 			x.className = "show";
 			setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
@@ -469,6 +468,7 @@ function downloadJSAtOnload() {
     							}
     						}
     					}
+							
     					$('#complaint-form').css({'display': 'none'});
     					$('#result-tab').css({'display': 'block'});
     					$('#filter-tab').css({'display': 'block'});
