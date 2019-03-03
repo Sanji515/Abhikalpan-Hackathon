@@ -4,8 +4,17 @@ from django.utils import timezone
 
 # Create your models here.
 
+
+class Company(models.Model):
+	company_name = models.CharField(max_length=200)
+
+	def __str__(self):
+		return self.company_name
+
+
 class Complaint(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+	company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
 	title = models.CharField(max_length=100)
 	meta_description = models.CharField(max_length=200)
 	description = models.TextField()
@@ -13,6 +22,7 @@ class Complaint(models.Model):
 
 	def __str__(self):
 		return '{user}--{title}'.format(user=self.user, title=self.title)
+
 
 class Comment(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)

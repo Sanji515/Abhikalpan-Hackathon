@@ -4,7 +4,7 @@ from django.http import JsonResponse, HttpResponse
 from account.forms import RegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from .models import Complaint, Comment, Like
+from .models import Complaint, Comment, Like, Company
 import json
 from django.core import serializers
 from watson_developer_cloud import NaturalLanguageUnderstandingV1
@@ -55,14 +55,17 @@ def index(request):
 def dashboard(request):
     complaints = Complaint.objects.filter(user=request.user).order_by('-created_at')
     all_complaints = Complaint.objects.filter(~Q(user=request.user)).order_by('-created_at')
+    company_names = Company.objects.all()
+
     if request.method == 'POST':
-        print('coming')
-        print(request.POST['meta_description'])
+        print(request.POST['company_name'])
+        company = Company.objects.get(company_name=request.POST['company_name'])
         curr_complaint = Complaint.objects.create(
             user=request.user,
             title=request.POST['title'],
             meta_description=request.POST['meta_description'],
-            description=request.POST['description'])
+            description=request.POST['description'],
+            company=company)
 
         result = recognize(request.POST['description'])
         curr_complaint = Complaint.objects.filter(id=curr_complaint.id).order_by('-created_at')
@@ -91,7 +94,8 @@ def dashboard(request):
         'complaints': complaints,
         'delete': delete,
         'first_time_login': first_time_login,
-        'all_complaints': all_complaints
+        'all_complaints': all_complaints,
+        'company_names': company_names
     }
     return render(request, 'index/dashboard.html', context)
 
