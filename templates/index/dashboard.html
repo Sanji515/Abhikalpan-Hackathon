@@ -209,16 +209,16 @@
 
 {% block body %}
 
-    {% if request.user.is_authenticated %}
-    	<div class="alert alert-info" id="snackbar">
-				{% if delete == 0 %}
-		  <strong>Hello,  {{request.user.username}}</strong>
-			   {% endif %}
-			  {% if delete == 1 %}
-		 <strong>Deleted</strong>
-		     {% endif %}
-
-		</div>
+    {% if request.user.is_authenticated %} 	
+		{% if first_time_login == 1 %}
+		<div class="alert alert-info" id="snackbar">
+	  		<strong>Hello,  {{request.user.username}}</strong>
+	  	</div>
+		{% elif delete == 1 %}
+		<div class="alert alert-info" id="snackbar">
+	 		<strong>Deleted</strong>
+	 	</div>
+	    {% endif %}	
     {% endif %}
 
     <!--Main Navigation-->
@@ -268,21 +268,29 @@
 							<br>
 						{% else %}
 					      	{% for complaint in complaints %}
-						      	<div class="card">
+						      	<div style="margin-right: 5%; margin-left: 5%;" class="card">
 								  <div class="card-header">
+								  	<blockquote class="blockquote mb-0">
 										<div class="row">
 											<div class="col-10">
 											<a href="{% url 'index:details' complaint.id %}"><h2>{{complaint.title}}</h2></a>
 											<h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
+											<footer class="blockquote-footer">
+												{{complaint.created_at}}
+											</footer>
 											</div>
 											<div class= "col-2">
 												<div style="float:right; position: relative;">
-											<a class="trashhref" href="{% url 'index:deleteDetails' complaint.id %}">
-												<i class="fas fa-trash-alt fa-lg" style="color:black;"></i></a>
+													<form action="{% url 'index:deleteDetails' complaint.id %}" method="POST">{% csrf_token %}
+														<button style="background-color: transparent; border: none;" type="submit" class="trashhref">
+															<i class="fas fa-trash-alt fa-lg" style="color:black;"></i>
+														</button>
+													</form>
 		
 												</div>
 											</div>
 										</div>
+									</blockquote>
 								  </div>
 								</div>
 								<br>
@@ -305,10 +313,15 @@
 							<br>
 						{% else %}
 					      	{% for complaint in all_complaints %}
-						      	<div class="card">
+						      	<div style="margin-right: 5%; margin-left: 5%;" class="card">
 								  <div class="card-header">
-								    <a href="{% url 'index:details' complaint.id %}"><h2>{{complaint.title}}</h2></a>
-								    <h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
+								  	<blockquote class="blockquote mb-0">
+										<a href="{% url 'index:details' complaint.id %}"><h2>{{complaint.title}}</h2></a>
+										<h6 class="card-title"><b>{{complaint.meta_description}}</b></h6>
+										<footer class="blockquote-footer">
+											{{complaint.created_at}}
+										</footer>
+									</blockquote>
 								  </div>
 								</div>
 								<br>

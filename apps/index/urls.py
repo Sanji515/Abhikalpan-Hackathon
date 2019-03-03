@@ -9,7 +9,7 @@ urlpatterns = [
 	path('login/', views.LoginView, name='login'),
 	path('logout/', views.LogoutView, name='logout'),
 	path('details/<int:id>', views.complaintDetails, name='details'),
-	path('new_comment/', views.CommentView, name='comment')
+	path('new_comment/', views.CommentView, name='comment'),
 	path('delete/<int:id>',views.deleteDetails, name ='deleteDetails'),
 	path('details/<int:id>', views.complaintDetails, name='details')
 ]
