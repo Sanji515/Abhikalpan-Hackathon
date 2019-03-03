@@ -1,11 +1,39 @@
 <!-- Section: form gradient -->
-  <div style="display: none;" id="result-tab" class="card">
-    <!--Card content-->
-    <br>
-    <div id="card-block" class="card-block">
-    </div>
-    <!--/.Card content-->
+  <div class="row">
+    <div style="display: none;" id="result-tab" class="card col-7">
+      <!--Card content-->
+      <br>
+      <div id="card-block" class="card-block">
+      </div>
+      <br/>
+      <button type="button" onclick="submitInput()" class="btn btn-rounded btn-primary btn-md">Submit</button>
+      <!--/.Card content-->
 
+    </div>
+    <div class="col-1">
+      
+    </div>
+    <div style="display: none;" id="filter-tab" class="card col-4">
+      <br>
+      <div id="card-block" class="card-block">
+        <h4><b>Uncheck field to dis-redact:</h4></b></h4>
+        <form id="filterForm">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="Check1" name="Name" value="name" checked>
+            <label class="form-check-label" for="Check1">Name</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="Check2" name="DOB" value="DOB" checked>
+            <label class="form-check-label" for="Check2">DOB</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="Check3" name="aadhar" value="aadhar" checked>
+            <label class="form-check-label" for="Check3">Aadhar</label>
+          </div>
+          <button type="button" onclick="filterInputs()" class="btn btn-rounded btn-primary btn-md">Apply</button>
+        </form>
+      </div>
+    </div>
   </div>
 
 <section id="complaint-form" class="form-gradient mb-5">

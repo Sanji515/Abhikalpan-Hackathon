@@ -289,6 +289,25 @@
 			</main>
 	</div>
 
+	<div id="successModal1" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Success</h2>
+          </div>
+          <div class="modal-body">
+            <h4>The complaint has been successfully submitted and publicly posted after redaction.</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal" onclick="location.reload();">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     {% block javascript %}
 
 		<script type="text/javascript">
@@ -315,11 +334,38 @@ function downloadJSAtOnload() {
     	</script>
 
     	<script type="text/javascript">
+    		function submitInput() {
+    			$.ajax({
+    				type: 'POST',
+    				url: '{% url "index:save"%}',
+    				data: {
+    					'complaint_id':complaintID,
+    					'description':description,
+    					'csrfmiddlewaretoken': '{{csrf_token}}'
+    				},
+    				success: function(response){
+    					$("#successModal1").modal();
+						setTimeout(function(){ location.reload(); }, 5000);
+    				},
+    				error: function(rs, e){
+    					alert("error");
+    				}
+				});
+    		}
+    	</script>
+
+
+    	<script type="text/javascript">
     		function setCharAt(str,index,chr) {
 			    if(index > str.length-1) return str;
 			    return str.substr(0,index) + chr + str.substr(index+1);
 			}
-
+			
+			var result ;
+			var description ;
+			var origDescription ;
+			var complaintID ;
+    		
     		function new_complaint(){
     			$.ajax({
     				type: 'POST',
@@ -332,13 +378,13 @@ function downloadJSAtOnload() {
     				},
     				
     				success: function(response){
-    					var result = response.result;
+    					result = response.result;
     					curr_complaint = JSON.parse(response.curr_complaint);
     					for(var i=0;i<curr_complaint.length;i++){
-    						var description = curr_complaint[i].fields['description'];
+    						description = curr_complaint[i].fields['description'];
+    						complaintID = curr_complaint[i].pk ;
     					}
-
-    					console.log(description[1]);
+    					origDescription = description ;
 
     					for(var i=0;i<result.length;i++){
     						var text = result[i].text;
@@ -346,14 +392,14 @@ function downloadJSAtOnload() {
 
     						var start;
     						var end;
-    						console.log(text.length);
+    						// console.log(text.length);
     						for(var j=0;j<description.length;j++){
     							start = j;
     							end = j;
     							temp = j
     							for(var k=0;k<text.length;k++){
-    								console.log("description"+description[j]);
-    								console.log("text"+text[k]);
+    								// console.log("description"+description[j]);
+    								// console.log("text"+text[k]);
     								if(description[j]==text[k]){
     									end = j;
     									j++;
@@ -363,23 +409,119 @@ function downloadJSAtOnload() {
     								}
     							}
     							if(start!=end){
-    								console.log(start);
-    								console.log(end);
+    								// console.log(start);
+    								// console.log(end);
     								for(var j=start;j<=end;j++){
 		    							description = setCharAt(description,j,'$');
 		    						}
-		    						console.log(description);
     							}
     						}	
     					}
     					$('#complaint-form').css({'display': 'none'});
     					$('#result-tab').css({'display': 'block'});
+    					$('#filter-tab').css({'display': 'block'});
     					$('#card-block').append(description);
     				},
     				error: function(rs, e){
     					alert('error');
     				}
     			});
+    		}
+
+    		function filterInputs() {
+    			var unchecked = new Array() ;
+    			if($("#Check1").prop("checked") == false){
+    				unchecked.push($("#Check1").attr("name")) ;
+    			}
+    			if($("#Check2").prop("checked") == false){
+    				unchecked.push($("#Check2").attr("name")) ;
+    			}
+				if($("#Check3").prop("checked") == false){
+    				unchecked.push($("#Check3").attr("name")) ;
+    			}
+    			var originalDescription = origDescription ;
+    			if (unchecked.length > 0){
+    				for(var i=0;i<result.length;i++){
+						var text = result[i].text;
+						var type = result[i].type;
+
+						var start;
+						var end;
+						// console.log(text.length);
+						for(var j=0;j<origDescription.length;j++){
+							start = j;
+							end = j;
+							temp = j
+							for(var k=0;k<text.length;k++){
+								// console.log("description"+description[j]);
+								// console.log("text"+text[k]);
+								if(origDescription[j]==text[k]){
+									end = j;
+									j++;
+								}
+								else{
+									break;
+								}
+							}
+							var flag = 0 ;
+							for(var k=0; k<unchecked.length; k++){
+								if(unchecked[k] == result[i].type){
+									flag = 1 ;
+									break ;
+								}
+							}
+							if(start!=end && flag==0){
+								// console.log(start);
+								// console.log(end);
+								for(var j=start;j<=end;j++){
+	    							origDescription = setCharAt(origDescription,j,'$');
+	    						}
+							}
+						}	
+					}
+					console.log(origDescription);
+					description = origDescription ;
+					origDescription = originalDescription ;
+					$('#card-block').html(description);
+    			}
+    			else
+				{
+					for(var i=0;i<result.length;i++){
+						var text = result[i].text;
+						var type = result[i].type;
+
+						var start;
+						var end;
+						// console.log(text.length);
+						for(var j=0;j<origDescription.length;j++){
+							start = j;
+							end = j;
+							temp = j
+							for(var k=0;k<text.length;k++){
+								// console.log("description"+description[j]);
+								// console.log("text"+text[k]);
+								if(origDescription[j]==text[k]){
+									end = j;
+									j++;
+								}
+								else{
+									break;
+								}
+							}
+							if(start!=end){
+								// console.log(start);
+								// console.log(end);
+								for(var j=start;j<=end;j++){
+	    							origDescription = setCharAt(origDescription,j,'$');
+	    						}
+							}
+						}	
+					}
+					console.log(origDescription);
+					description = origDescription ;
+					origDescription = originalDescription ;
+					$('#card-block').html(description);
+				}
     		}
     	</script>
     {% endblock %}

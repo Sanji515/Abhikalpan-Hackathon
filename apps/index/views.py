@@ -56,7 +56,6 @@ def dashboard(request):
 	complaints = Complaint.objects.all()
 	if request.method == 'POST':
 		print('coming')
-		print(request.POST['meta_description'])
 		curr_complaint = Complaint.objects.create(
 			user=request.user,
 			title=request.POST['title'],
@@ -77,6 +76,21 @@ def dashboard(request):
 		'complaints': complaints
 	}
 	return render(request, 'index/dashboard.html', context)
+
+
+@login_required
+def complaintSave(request):
+	if request.method == 'POST':
+		ComplaintId = request.POST['complaint_id']
+		desc = request.POST['description']
+		comp = Complaint.objects.get(pk=ComplaintId)
+		comp.description = desc
+		comp.save()
+		res="success"
+		return HttpResponse(res)
+	else:
+		res="error"
+		return HttpResponse(res)
 
 @login_required
 def complaintDetails(request, id):
