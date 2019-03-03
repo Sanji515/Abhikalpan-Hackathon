@@ -38,11 +38,25 @@
 		font-size: 1.5rem;
 		margin-top: .25rem;
 	}
+	#headers {
+			font-size: 1rem;
+			font-weight: 500;
+			padding-top: 10px;
+			color: #000;
+
+	}
+	.comment_form  {
+		padding-top: 100px;
+	}
 
 	.navbar-toggleable-sm .navbar-collapse,
 	.navbar-toggleable-md .navbar-collapse {
 		width: auto;
 		padding-left: 10px;
+	}
+	.far {
+		padding-bottom: 4px;
+		padding-top: 4px;
 	}
 
 	</style>
@@ -53,23 +67,35 @@
 
     <!--Main Navigation-->
       {% include 'globals/navbar.html' %}
-    <!--Main Navigation-->
-
+		<!--Main Navigation-->
+		<div class="container-fluid">
+				<div class="row" >
+				      	<div class="card col-md-10" style="background-color:grey;">
+			<i class="far fa-clock" style="color:#FFF"> {{complaint.created_at }}</i>
+			</div>
+				</div>
+			</div>
    <div class="container-fluid">
 		<div class="row">
+				
 		      	<div class="card col-md-10">
-				  <div class="card-header">
-				    <h1>{{complaint.title}}</h1>
-				    <br>
+				  <div >
+						
+						<h6 id="headers">Title :</h6>
+				    <h3>{{complaint.title}}</h3>
+						
+						<h6 id="headers">Meta-Description :</h6>
 				    <h3 class="card-title">{{complaint.meta_description}}</h3>
 				  </div>
-				  <div class="card-body">
-				    <br>
+				  <div>
+						<br>
+						<h6 id="headers">Description :</h6>
 				    <h5 class="card-description">{{complaint.description}}</h5>
 				  </div>
-				  <hr>
+				 
 
-					<form>
+					<form class="comment_form">
+							<hr>
 						<div class="md-form">
 							<i class="far fa-comment-alt prefix grey-text"></i>
 							<textarea type="text" id="comment" name="comment" class="md-textarea form-control" rows="3"></textarea>
