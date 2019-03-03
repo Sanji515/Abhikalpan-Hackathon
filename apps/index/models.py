@@ -22,3 +22,12 @@ class Comment(models.Model):
 
 	def __str__(self):
 		return '{user}--{complaint}'.format(user=self.user, complaint=self.complaint)
+
+class Like(models.Model):
+	complaint = models.ForeignKey(Complaint, on_delete=models.CASCADE)
+	liked_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return '{liked_by}--{complaint}'.format(
+			liked_by=self.liked_by,
+			complaint=self.complaint)
