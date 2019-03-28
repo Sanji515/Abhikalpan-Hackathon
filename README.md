@@ -1,7 +1,5 @@
 # Abhikalpan-Hackathon
 
-## Live Project URL: [click here](http://abhikalpan-env.tpivq24rmw.ap-south-1.elasticbeanstalk.com)
-
 Setting up this project on your local machine is really easy.
 
 ## Installation instructions:
